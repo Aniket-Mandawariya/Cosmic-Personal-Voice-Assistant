@@ -1,0 +1,11 @@
+Flask
+SpeechRecognition
+pyttsx3
+PyAudio
+wikipedia
+pywhatkit
+psutil
+pyautogui
+pywin32
+pycaw
+screen_brightness_control

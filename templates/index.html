@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#08111f" />
+    <title>Cosmic</title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+    <div class="ambient ambient-a"></div>
+    <div class="ambient ambient-b"></div>
+    <main class="shell">
+        <section class="hero">
+            <p class="eyebrow">Cross-platform assistant</p>
+            <h1>{{ assistant_name }}</h1>
+            <p class="lede">Speak or type a command. The same core brain runs on phone and PC.</p>
+        </section>
+
+        <section class="panel">
+            <div id="conversation" class="conversation" aria-live="polite"></div>
+
+
+                <div class="quick-start" aria-label="Quick start commands">
+                <button type="button" class="chip" data-command="help">Show help</button>
+                <button type="button" class="chip" data-command="daily briefing">Daily briefing</button>
+                <button type="button" class="chip" data-command="clipboard manager">Clipboard manager</button>
+                <button type="button" class="chip" data-command="file search cosmic_engine">File search</button>
+                <button type="button" class="chip" data-command="list notes">Notes</button>
+                <button type="button" class="chip" data-command="focus mode">Focus mode</button>
+                <button type="button" class="chip" data-command="focus mode off">Focus off</button>
+                <button type="button" class="chip" data-command="screenshot">Screenshot</button>
+                <button type="button" class="chip" data-command="volume 50">Volume 50</button>
+                <button type="button" class="chip" data-command="translate hello to hindi">Translate</button>
+            </div>
+                <div class="panel-top">
+                <form id="commandForm" class="composer">
+                <input id="commandInput" type="text" aria-label="Type a command" placeholder="Talk or Type" autocomplete="off" />
+                <button id="micBtn" type="button" class="secondary">Start Listening</button>
+                <button type="submit">Send</button>
+                <!-- <button id="stopBtn" type="button" class="secondary">Stop</button> -->
+                </form>
+                <div class="status-wrap">
+                    <div class="status-stack">
+                        <div id="speechWaveform" class="speech-waveform speech-ready" aria-hidden="true">
+                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                        <div id="speechIcon" class="speech-icon speech-ready" aria-hidden="true"></div>
+                        <div id="statusBadge" class="status-badge status-ready status">Ready</div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+    </main>
+
+    <script>
+        window.ASSISTANT_NAME = "{{ assistant_name }}";
+    </script>
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</body>
+</html>

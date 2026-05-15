@@ -1,0 +1,78 @@
+{
+  "facts": [
+    "me at",
+    "my name is aniket mandariya",
+    "name: aniket mandariya"
+  ],
+  "profile": {
+    "name": "aniket mandariya"
+  },
+  "conversation_mode": true,
+  "recent": [
+    {
+      "user": "hello hello hello",
+      "assistant": "I'm in local mode right now. I can still help with time, dates, Wikipedia, web searches, opening apps, YouTube, notes, notes editor, file search, clipboard manager, focus mode, typing text, keyboard shortcuts, calling, and system actions.",
+      "time": "2026-05-15T19:07:26"
+    },
+    {
+      "user": "gfcggvhbj",
+      "assistant": "I'm in local mode right now. I can still help with time, dates, Wikipedia, web searches, opening apps, YouTube, notes, notes editor, file search, clipboard manager, focus mode, typing text, keyboard shortcuts, calling, and system actions.",
+      "time": "2026-05-15T19:07:42"
+    },
+    {
+      "user": "daily briefing",
+      "assistant": "Here is your briefing. It is 07:10 PM on Friday, May 15, 2026. You have 0 active reminders, 0 calendar events, and 0 active timers. Upcoming: Weather for Jaipur: Haze, 37?C, feels like 36?C, humidity 26%.; You do not have any active reminders.; You do not have any calendar events.; You do not have any active timers.",
+      "time": "2026-05-15T19:10:01"
+    },
+    {
+      "user": "screenshot",
+      "assistant": "Taking a screenshot.",
+      "time": "2026-05-15T19:10:08"
+    },
+    {
+      "user": "focus mode off",
+      "assistant": "Switching to normal mode.",
+      "time": "2026-05-15T19:10:22"
+    },
+    {
+      "user": "focus mode off",
+      "assistant": "Switching to normal mode.",
+      "time": "2026-05-15T19:10:24"
+    },
+    {
+      "user": "focus mode off",
+      "assistant": "Switching to normal mode.",
+      "time": "2026-05-15T19:10:26"
+    },
+    {
+      "user": "clipboard manager",
+      "assistant": "Clipboard manager: no saved items yet. Try copy hello, clipboard history, paste clipboard 1, or clear clipboard history.",
+      "time": "2026-05-15T19:12:11"
+    },
+    {
+      "user": "file search cosmic_engine",
+      "assistant": "I found 3 files: 1. cosmic_engine.py (Python_projects); 2. cosmic_engine.cpython-313.pyc (__pycache__); 3. test_cosmic_engine.cpython-313.pyc (__pycache__)",
+      "time": "2026-05-15T19:12:12"
+    },
+    {
+      "user": "clipboard manager",
+      "assistant": "Clipboard manager: no saved items yet. Try copy hello, clipboard history, paste clipboard 1, or clear clipboard history.",
+      "time": "2026-05-15T19:12:13"
+    },
+    {
+      "user": "file search cosmic_engine",
+      "assistant": "I found 3 files: 1. cosmic_engine.py (Python_projects); 2. cosmic_engine.cpython-313.pyc (__pycache__); 3. test_cosmic_engine.cpython-313.pyc (__pycache__)",
+      "time": "2026-05-15T19:12:15"
+    },
+    {
+      "user": "list notes",
+      "assistant": "I do not have any notes yet.",
+      "time": "2026-05-15T19:12:19"
+    }
+  ],
+  "stopwatch": {
+    "running": false,
+    "started_at": "",
+    "elapsed_seconds": 0
+  }
+}
