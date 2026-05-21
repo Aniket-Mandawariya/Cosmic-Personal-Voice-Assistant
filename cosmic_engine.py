@@ -63,6 +63,64 @@ class CosmicEngine:
         return re.sub(r"\D", "", number)
 
     def human_reply(self, kind: str, default: str = "") -> str:
+        if self.casual_mode:
+            if self.language == "hi":
+                casual_replies = {
+                    "unknown": [
+                        "समझ नहीं आया, फिर से बोल दो?",
+                        "थोड़ा आसान तरीके से बोलो, मैं पकड़ लूँगा।",
+                        "Oops, ठीक से नहीं सुन पाया।",
+                    ],
+                    "greeting": [
+                        "हाँ, बोलो।",
+                        "जी, मैं हूँ।",
+                        "बता क्या चाहिए?",
+                        "मैं सुन रहा हूँ।",
+                    ],
+                    "done": [
+                        "हो गया, और कुछ?",
+                        "Done.",
+                        "मैंने कर दिया।",
+                        "सब सेट है।",
+                    ],
+                    "cancel": [
+                        "ठीक है, रोक दिया।",
+                        "कोई बात नहीं, cancel कर दिया।",
+                        "Done, stop हो गया।",
+                    ],
+                }
+                pool = casual_replies.get(kind)
+                if pool:
+                    return random.choice(pool)
+            else:
+                casual_replies = {
+                    "unknown": [
+                        "Hmm, I missed that. Say it again?",
+                        "Try that one more time.",
+                        "I didn’t quite catch it.",
+                    ],
+                    "greeting": [
+                        "Hey, what’s up?",
+                        "Yep, I’m here.",
+                        "Go ahead.",
+                        "I’m listening.",
+                    ],
+                    "done": [
+                        "Done. Anything else?",
+                        "All set.",
+                        "Yep, done.",
+                        "Finished.",
+                    ],
+                    "cancel": [
+                        "Okay, I stopped it.",
+                        "No worries, cancelled.",
+                        "Done, it’s off.",
+                    ],
+                }
+                pool = casual_replies.get(kind)
+                if pool:
+                    return random.choice(pool)
+
         if self.language == "hi":
             replies = {
                 "unknown": [
@@ -519,41 +577,41 @@ class CosmicEngine:
                 preferred = str(profile.get("preferred name", "")).strip() or str(profile.get("name", "")).strip()
                 if preferred:
                     return CosmicResponse(message=self._msg(f"Your name is {preferred}.", f"आपका नाम {preferred} है।"), language=self.language)
-            return CosmicResponse(message=self._msg("I do not know your name yet. You can tell me by saying: my name is ...", "मुझे अभी आपका नाम नहीं पता। आप बोल सकते हैं: my name is ..."), language=self.language)
+            return CosmicResponse(message=self._msg("I don’t know your name yet. Just say: my name is ...", "मुझे अभी आपका नाम नहीं पता। बस बोलो: my name is ..."), language=self.language)
 
         if "how are you" in text:
-            return CosmicResponse(message=self._msg("I’m doing well, thanks for asking.", "मैं अच्छा हूँ, पूछने के लिए धन्यवाद।"), language=self.language)
+            return CosmicResponse(message=self._msg("I’m doing pretty well, thanks for asking. How about you?", "मैं बढ़िया हूँ, पूछने के लिए धन्यवाद। आप कैसे हैं?"), language=self.language)
 
         if "what can you do" in text:
             return CosmicResponse(
                 message=self._msg(
-                    "I can tell the time and date, search Wikipedia, open apps and websites, type text, press keys, call contacts or numbers, save notes, and handle system actions.",
-                    "मैं समय और तारीख बता सकता हूँ, Wikipedia देख सकता हूँ, ऐप और वेबसाइट खोल सकता हूँ, टेक्स्ट टाइप कर सकता हूँ, कीबोर्ड चल सकता हूँ, कॉल कर सकता हूँ, नोट सेव कर सकता हूँ, और सिस्टम कमांड कर सकता हूँ।",
+                    "I can do the useful stuff: time, date, Wikipedia, web search, opening apps and websites, typing, keyboard shortcuts, calls, notes, and a bunch of system actions. If you want, I can show the full list too.",
+                    "मैं काम की चीज़ें कर सकता हूँ: समय, तारीख, Wikipedia, web search, apps और websites खोलना, typing, keyboard shortcuts, call, notes, और कई system actions. चाहो तो पूरा list भी बता दूँ।",
                 ),
                 language=self.language,
             )
 
         if "thank you" in text or "thanks" in text:
-            return CosmicResponse(message=self._msg("You’re welcome.", "आपका स्वागत है।"), language=self.language)
+            return CosmicResponse(message=self._msg("Anytime.", "हमेशा।"), language=self.language)
 
         if "who made you" in text or "who create you" in text:
-            return CosmicResponse(message=self._msg("I was built by Aniket Mandawariya as a personal assistant named Cosmic.", "मुझे Aniket Mandawariya ने personal assistant के रूप में बनाया गया है।"), language=self.language)
+            return CosmicResponse(message=self._msg("I was built by Aniket Mandawariya as Cosmic, a personal assistant.", "मुझे Aniket Mandawariya ने Cosmic personal assistant के रूप में बनाया है।"), language=self.language)
 
         if "what is your name" in text or "your name" in text:
-            return CosmicResponse(message=self._msg(f"My name is {self.assistant_name}.", f"मेरा नाम {self.assistant_name} है।"), language=self.language)
+            return CosmicResponse(message=self._msg(f"I’m {self.assistant_name}.", f"मैं {self.assistant_name} हूँ।"), language=self.language)
         if self.conversation_mode and any(phrase in text for phrase in {"how are you doing", "what's up", "whats up", "how is it going"}):
             profile = self.memory.get("profile", {})
             name = ""
             if isinstance(profile, dict):
                 name = str(profile.get("preferred name", "")).strip() or str(profile.get("name", "")).strip()
             if name:
-                return CosmicResponse(message=self._msg(f"I’m good, {name}. What about you?", f"मैं ठीक हूँ, {name}। आप कैसे हैं?"), language=self.language)
-            return CosmicResponse(message=self._msg("I’m good. What about you?", "मैं ठीक हूँ। आप कैसे हैं?"), language=self.language)
+                return CosmicResponse(message=self._msg(f"I’m good, {name}. What about you?", f"मैं ठीक हूँ, {name}। तुम कैसे हो?"), language=self.language)
+            return CosmicResponse(message=self._msg("I’m good. What about you?", "मैं ठीक हूँ। तुम कैसे हो?"), language=self.language)
 
         return CosmicResponse(
             message=self._msg(
-                "I'm in local mode right now. I can't do this command",
-                "मैं अभी लोकल मोड में हूँ। फिर भी मैं समय, तारीख, Wikipedia, वेब खोज, ऐप खोलना, YouTube, notes editor, file search, clipboard manager, focus mode, टेक्स्ट टाइप करना, कीबोर्ड शॉर्टकट, कॉल और सिस्टम कमांड में मदद कर सकता हूँ।",
+                "I’m in local mode right now, but I can still help with time, date, Wikipedia, web search, apps, notes, typing, keyboard shortcuts, calls, and system actions.",
+                "मैं अभी local mode में हूँ, लेकिन समय, तारीख, Wikipedia, web search, apps, notes, typing, keyboard shortcuts, call, और system actions में मदद कर सकता हूँ।",
             ),
             language=self.language,
         )
