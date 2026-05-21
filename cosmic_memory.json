@@ -11,26 +11,6 @@
   "conversation_mode": true,
   "recent": [
     {
-      "user": "placenta",
-      "assistant": "I'm in local mode right now. I can still help with time, dates, Wikipedia, web searches, opening apps, YouTube, notes, notes editor, file search, clipboard manager, focus mode, typing text, keyboard shortcuts, calling, and system actions.",
-      "time": "2026-05-17T22:58:37"
-    },
-    {
-      "user": "press enter",
-      "assistant": "Pressing enter.",
-      "time": "2026-05-17T22:58:41"
-    },
-    {
-      "user": "hello",
-      "assistant": "Hey there. What can I help with?",
-      "time": "2026-05-21T20:47:21"
-    },
-    {
-      "user": "play beliver on youtube",
-      "assistant": "Got it, I’m looking up beliver on youtube on YouTube.",
-      "time": "2026-05-21T20:48:05"
-    },
-    {
       "user": "help",
       "assistant": "Try saying: hello, who are you, what can you do, what do you remember; time, date, daily briefing; search Python tutorials, who is Nikola Tesla, wikipedia Python; open notepad, open whatsapp, open screenshots folder; play lo-fi music; type hello there, note buy milk, search note python, find note meeting, list notes, open note 1, delete note 1, press enter, hotkey ctrl c; scroll current page, scroll a little, scroll a lot, scroll faster, scroll slower, scroll up, scroll down, click, double click, move mouse up 100; call 9876543210, send message to mom hello, open whatsapp chat with mom; remember this is my maa mobile no 9876543210, remember that my name is Aniket, conversation mode, command mode; daily planner, plan my day; remind me in 10 minutes to drink water, list reminders, snooze reminder 1 for 10 minutes; clipboard manager, clear clipboard history, remove clipboard 1, copy clipboard 1, paste clipboard 1; file search, search file invoice, open file 1; search note python, find note meeting, list notes, open note 1, delete note 1, edit note 1 buy milk; add event tomorrow at 5 pm team meeting, calendar, list events, cancel event 1; timer 10 minutes, list timers, cancel timer 1, start stopwatch, stop stopwatch, reset stopwatch; clipboard, copy hello, read clipboard, clipboard history, paste clipboard 2; weather, set alarm for 7 am to wake up, screenshot, translate hello to hindi, translate and speak hello to hindi; open downloads, open documents, open pictures, open desktop; quick reply busy, quick reply call you later, reply on my way; study mode, work mode, focus mode, focus mode off, normal mode, set volume 50, brightness 70, lock the computer, shutdown, restart, sleep, log off.",
       "time": "2026-05-21T20:48:27"
@@ -69,6 +49,26 @@
       "user": "Hey there",
       "assistant": "I'm in local mode right now. I can still help with time, dates, Wikipedia, web searches, opening apps, YouTube, notes, notes editor, file search, clipboard manager, focus mode, typing text, keyboard shortcuts, calling, and system actions.",
       "time": "2026-05-21T20:55:40"
+    },
+    {
+      "user": "hey there",
+      "assistant": "Hello. Go ahead.",
+      "time": "2026-05-21T21:08:19"
+    },
+    {
+      "user": "how are you",
+      "assistant": "I’m doing well, thanks for asking.",
+      "time": "2026-05-21T21:08:26"
+    },
+    {
+      "user": "what can you do",
+      "assistant": "Try saying: hello, who are you, what can you do, what do you remember; time, date, daily briefing; search Python tutorials, who is Nikola Tesla, wikipedia Python; open notepad, open whatsapp, open screenshots folder; play lo-fi music; type hello there, note buy milk, search note python, find note meeting, list notes, open note 1, delete note 1, press enter, hotkey ctrl c; scroll current page, scroll a little, scroll a lot, scroll faster, scroll slower, scroll up, scroll down, click, double click, move mouse up 100; call 9876543210, send message to mom hello, open whatsapp chat with mom; remember this is my maa mobile no 9876543210, remember that my name is Aniket, conversation mode, command mode; daily planner, plan my day; remind me in 10 minutes to drink water, list reminders, snooze reminder 1 for 10 minutes; clipboard manager, clear clipboard history, remove clipboard 1, copy clipboard 1, paste clipboard 1; file search, search file invoice, open file 1; search note python, find note meeting, list notes, open note 1, delete note 1, edit note 1 buy milk; add event tomorrow at 5 pm team meeting, calendar, list events, cancel event 1; timer 10 minutes, list timers, cancel timer 1, start stopwatch, stop stopwatch, reset stopwatch; clipboard, copy hello, read clipboard, clipboard history, paste clipboard 2; weather, set alarm for 7 am to wake up, screenshot, translate hello to hindi, translate and speak hello to hindi; open downloads, open documents, open pictures, open desktop; quick reply busy, quick reply call you later, reply on my way; study mode, work mode, focus mode, focus mode off, normal mode, set volume 50, brightness 70, lock the computer, shutdown, restart, sleep, log off.",
+      "time": "2026-05-21T21:08:35"
+    },
+    {
+      "user": "copy",
+      "assistant": "I'm in local mode right now. I can't do this command",
+      "time": "2026-05-21T21:09:02"
     }
   ],
   "stopwatch": {
