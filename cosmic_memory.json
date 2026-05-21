@@ -15,36 +15,6 @@
   "conversation_mode": true,
   "recent": [
     {
-      "user": "remember my maa mobile no 9509516949",
-      "assistant": "Saved maa in contacts.",
-      "time": "2026-05-21T21:15:24"
-    },
-    {
-      "user": "send message to maa",
-      "assistant": "What message should I send to maa?",
-      "time": "2026-05-21T21:15:48"
-    },
-    {
-      "user": "yoyo",
-      "assistant": "Sending WhatsApp message to maa.",
-      "time": "2026-05-21T21:15:58"
-    },
-    {
-      "user": "remember bro mobile no 9460384665",
-      "assistant": "Saved bro in contacts.",
-      "time": "2026-05-21T21:18:18"
-    },
-    {
-      "user": "send message to maa",
-      "assistant": "What message should I send to maa?",
-      "time": "2026-05-21T21:18:54"
-    },
-    {
-      "user": "send message to bro",
-      "assistant": "I could not find maa. Add it to contacts.json or say the phone number, then I will send: send message to bro",
-      "time": "2026-05-21T21:19:23"
-    },
-    {
       "user": "send message to maa",
       "assistant": "I could not find maa. Add it to contacts.json or say the phone number, then I will send: send message to bro",
       "time": "2026-05-21T21:19:39"
@@ -73,6 +43,36 @@
       "user": "hello",
       "assistant": "I could not find maa. Add it to contacts.json or say the phone number, then I will send: hello",
       "time": "2026-05-21T21:25:31"
+    },
+    {
+      "user": "how are you",
+      "assistant": "I’m doing pretty well, thanks for asking. How about you?",
+      "time": "2026-05-21T21:36:31"
+    },
+    {
+      "user": "thanks",
+      "assistant": "Anytime.",
+      "time": "2026-05-21T21:36:43"
+    },
+    {
+      "user": "what can you do",
+      "assistant": "Try saying: hello, who are you, what can you do, what do you remember; time, date, daily briefing; search Python tutorials, who is Nikola Tesla, wikipedia Python; open notepad, open whatsapp, open screenshots folder; play lo-fi music; type hello there, note buy milk, search note python, find note meeting, list notes, open note 1, delete note 1, press enter, hotkey ctrl c; scroll current page, scroll a little, scroll a lot, scroll faster, scroll slower, scroll up, scroll down, click, double click, move mouse up 100; call 9876543210, send message to mom hello, open whatsapp chat with mom; remember this is my maa mobile no 9876543210, remember that my name is Aniket, conversation mode, command mode; daily planner, plan my day; remind me in 10 minutes to drink water, list reminders, snooze reminder 1 for 10 minutes; clipboard manager, clear clipboard history, remove clipboard 1, copy clipboard 1, paste clipboard 1; file search, search file invoice, open file 1; search note python, find note meeting, list notes, open note 1, delete note 1, edit note 1 buy milk; add event tomorrow at 5 pm team meeting, calendar, list events, cancel event 1; timer 10 minutes, list timers, cancel timer 1, start stopwatch, stop stopwatch, reset stopwatch; clipboard, copy hello, read clipboard, clipboard history, paste clipboard 2; weather, set alarm for 7 am to wake up, screenshot, translate hello to hindi, translate and speak hello to hindi; open downloads, open documents, open pictures, open desktop; quick reply busy, quick reply call you later, reply on my way; study mode, work mode, focus mode, focus mode off, normal mode, set volume 50, brightness 70, lock the computer, shutdown, restart, sleep, log off.",
+      "time": "2026-05-21T21:36:59"
+    },
+    {
+      "user": "What is your name",
+      "assistant": "I’m Cosmic, your personal assistant.",
+      "time": "2026-05-21T21:37:12"
+    },
+    {
+      "user": "what is artificial intelligence",
+      "assistant": "I’m in local mode right now, but I can still help with time, date, Wikipedia, web search, apps, notes, typing, keyboard shortcuts, calls, and system actions.",
+      "time": "2026-05-21T21:51:23"
+    },
+    {
+      "user": "stop",
+      "assistant": "Alright, I’ll be here when you need me.",
+      "time": "2026-05-21T21:51:29"
     }
   ],
   "stopwatch": {

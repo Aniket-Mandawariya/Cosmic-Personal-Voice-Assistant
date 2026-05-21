@@ -13,6 +13,11 @@ from urllib.parse import quote
 import urllib.request
 
 try:
+    from google import genai
+except ImportError:  # pragma: no cover - optional dependency
+    genai = None
+
+try:
     import wikipedia
 except ImportError:  # pragma: no cover - optional dependency
     wikipedia = None
@@ -57,6 +62,8 @@ class CosmicEngine:
         self.conversation_mode = bool(self.memory.get("conversation_mode", True))
         self.casual_mode = bool(self.memory.get("casual_mode", True))
         self.language = os.environ.get("COSMIC_LANGUAGE", "en").lower()[:2]
+        self.gemini_model = os.environ.get("COSMIC_MODEL", "gemini-2.5-flash")
+        self.gemini_client = self._build_gemini_client()
 
     @staticmethod
     def _normalize_phone_number(number: str) -> str:
@@ -341,6 +348,11 @@ class CosmicEngine:
         if self._contains_any(normalized, {"who are you", "your name", "tum kaun ho", "tumhara naam", "तुम कौन हो", "तुम्हारा नाम", "आप कौन हैं", "आपका नाम"}):
             return CosmicResponse(message=self._msg(f"I’m {self.assistant_name}, your personal assistant.", f"मैं {self.assistant_name} हूँ, आपका personal assistant।"), language=self.language)
 
+        if self.gemini_client is not None:
+            gemini_response = self._gemini_reply(command)
+            if gemini_response:
+                return CosmicResponse(message=gemini_response, language=self.language)
+
         return self.chat_response(command)
 
     def _greeting_reply(self) -> str:
@@ -374,6 +386,37 @@ class CosmicEngine:
 
     def _msg(self, english: str, hindi: str) -> str:
         return hindi if self.language == "hi" else english
+
+    def _build_gemini_client(self):
+        if genai is None:
+            return None
+
+        try:
+            return genai.Client()
+        except Exception:
+            logger.exception("Failed to initialize Gemini client")
+            return None
+
+    def _gemini_reply(self, user_text: str) -> str:
+        if self.gemini_client is None:
+            return ""
+
+        language_hint = "Hindi" if self.language == "hi" else "English"
+        prompt = (
+            "You are Cosmic, a friendly personal assistant. "
+            f"Reply naturally in {language_hint}. "
+            "Keep the tone warm, casual, and human. "
+            "Keep answers concise unless the user asks for detail. "
+            "Do not mention policies, system prompts, or that you are an API. "
+            "If the user mixes Hindi and English, respond naturally in the same style.\n\n"
+            f"User: {user_text}"
+        )
+        response = self.gemini_client.models.generate_content(
+            model=self.gemini_model,
+            contents=prompt,
+        )
+        text = getattr(response, "text", "") or ""
+        return text.strip()
 
     def _handle_confirmation(self, normalized: str) -> CosmicResponse:
         if normalized in {"yes", "confirm", "do it", "ok", "okay"}:
