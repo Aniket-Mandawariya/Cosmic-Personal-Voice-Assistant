@@ -154,10 +154,10 @@ class CosmicEngine:
             self.language = "en"
             return CosmicResponse(message=self._msg("English mode turned on.", "अंग्रेज़ी मोड चालू हो गया है।"), language="en")
 
-        if normalized in {"hello", "hi", "hey", "hiya", "good morning", "good afternoon", "good evening", "namaste", "namaskar", "pranam", "kaise ho", "kaise hain", "kya haal hai", "नमस्ते", "नमस्कार", "कैसे हो", "कैसे हैं", "क्या हाल है", "प्रणाम"}:
+        if normalized in {"hello", "hi", "hey", "hey there", "hiya", "good morning", "good afternoon", "good evening", "namaste", "namaskar", "pranam", "kaise ho", "kaise hain", "kya haal hai", "नमस्ते", "नमस्कार", "कैसे हो", "कैसे हैं", "क्या हाल है", "प्रणाम"}:
             return CosmicResponse(message=self._greeting_reply(), language=self.language)
 
-        if normalized in {"exit", "quit", "stop", "goodbye", "bye", "alvida", "phir milenge", "बंद करो", "बंद", "विदा"}:
+        if normalized in {"exit", "quit", "stop", "see you soon", "goodbye", "bye", "alvida", "phir milenge", "बंद करो", "बंद", "विदा"}:
             return CosmicResponse(message=self._msg("Alright, I’ll be here when you need me.", "ठीक है, जब भी ज़रूरत हो मैं यहाँ हूँ।"), should_exit=True, language=self.language)
 
         if self._contains_any(normalized, {"time", "samay", "samay batao", "samay बताओ", "वक्त", "waqt", "samay dikhao", "घड़ी", "घड़ी बताओ", "समय", "समय बताओ", "समय दिखाओ"}):
@@ -377,7 +377,7 @@ class CosmicEngine:
                     return response
                 return CosmicResponse(
                     message=self._msg(
-                        f"Got it. Now tell me the message you want to send to {contact}.",
+                        f"Got it. Now give me your message {contact}.",
                         f"ठीक है। अब {contact} को भेजने के लिए message बताइए।",
                     )
                 )
@@ -409,7 +409,7 @@ class CosmicEngine:
                 if not self.pending_message_text:
                     return CosmicResponse(
                         message=self._msg(
-                            f"Got it. Now tell me the message you want to send to {contact}.",
+                            f"Got it. Now give me your message {contact}.",
                             f"ठीक है। अब {contact} को भेजने के लिए message बताइए।",
                         )
                     )
@@ -454,7 +454,7 @@ class CosmicEngine:
 
     def wikipedia_lookup(self, topic: str) -> CosmicResponse:
         if not topic:
-            return CosmicResponse(message="Tell me what topic you want me to search on Wikipedia.")
+            return CosmicResponse(message="Gice me your topic to search on Wikipedia.")
 
         if wikipedia is None:
             return CosmicResponse(message="Wikipedia support is not installed yet. Please add the wikipedia package.")
@@ -513,7 +513,7 @@ class CosmicEngine:
 
         return CosmicResponse(
             message=self._msg(
-                "I'm in local mode right now. I can still help with time, dates, Wikipedia, web searches, opening apps, YouTube, notes, notes editor, file search, clipboard manager, focus mode, typing text, keyboard shortcuts, calling, and system actions.",
+                "I'm in local mode right now. I can't do this command",
                 "मैं अभी लोकल मोड में हूँ। फिर भी मैं समय, तारीख, Wikipedia, वेब खोज, ऐप खोलना, YouTube, notes editor, file search, clipboard manager, focus mode, टेक्स्ट टाइप करना, कीबोर्ड शॉर्टकट, कॉल और सिस्टम कमांड में मदद कर सकता हूँ।",
             ),
             language=self.language,
