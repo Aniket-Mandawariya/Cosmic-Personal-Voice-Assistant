@@ -11,16 +11,6 @@
   "conversation_mode": true,
   "recent": [
     {
-      "user": "send message to Irfan",
-      "assistant": "What message should I send to Irfan?",
-      "time": "2026-05-17T22:58:17"
-    },
-    {
-      "user": "bhosdi ke",
-      "assistant": "Sending WhatsApp message to Irfan.",
-      "time": "2026-05-17T22:58:25"
-    },
-    {
       "user": "placenta",
       "assistant": "I'm in local mode right now. I can still help with time, dates, Wikipedia, web searches, opening apps, YouTube, notes, notes editor, file search, clipboard manager, focus mode, typing text, keyboard shortcuts, calling, and system actions.",
       "time": "2026-05-17T22:58:37"
@@ -69,6 +59,16 @@
       "user": "file search python_project",
       "assistant": "I found 10 files: 1. app.py (Python_projects); 2. contacts.json (Python_projects); 3. cosmic_alarms.json (Python_projects); 4. cosmic_calendar.json (Python_projects); 5. cosmic_clipboard.json (Python_projects)",
       "time": "2026-05-21T20:49:27"
+    },
+    {
+      "user": "hello",
+      "assistant": "Good evening. I’m listening.",
+      "time": "2026-05-21T20:55:28"
+    },
+    {
+      "user": "Hey there",
+      "assistant": "I'm in local mode right now. I can't help you with this.",
+      "time": "2026-05-21T20:55:40"
     }
   ],
   "stopwatch": {
