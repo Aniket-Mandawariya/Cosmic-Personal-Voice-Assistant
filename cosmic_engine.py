@@ -55,6 +55,7 @@ class CosmicEngine:
         self.last_announced_calendar_events: list[dict[str, object]] = []
         self.last_announced_timers: list[dict[str, object]] = []
         self.conversation_mode = bool(self.memory.get("conversation_mode", True))
+        self.casual_mode = bool(self.memory.get("casual_mode", True))
         self.language = os.environ.get("COSMIC_LANGUAGE", "en").lower()[:2]
 
     @staticmethod
@@ -65,26 +66,26 @@ class CosmicEngine:
         if self.language == "hi":
             replies = {
                 "unknown": [
-                    "मुझे ठीक से समझ नहीं आया। आप समय, खोज, या वेबसाइट के बारे में पूछ सकते हैं।",
-                    "माफ़ कीजिए, मैं नहीं समझ पाया। आप ऐप खोलने, वेब खोजने, या कुछ ढूँढने के लिए कह सकते हैं।",
-                    "मुझे वह नहीं समझ आया। क्या आप फिर से बोलेंगे?",
+                    "समझ नहीं आया, sorry. आप फिर से बोलेंगे?",
+                    "थोड़ा clear बोलिए, फिर मैं तुरंत help करता हूँ।",
+                    "मैंने ठीक से नहीं पकड़ा। आप चाहें तो दोबारा बोल दें।",
                 ],
                 "greeting": [
-                    "बिलकुल।",
-                    "ज़रूर।",
-                    "हाँ जी।",
-                    "जी बताइए।",
+                    "हाँ जी, बताइए।",
+                    "ज़रूर, बोलिए।",
+                    "जी, मैं सुन रहा हूँ।",
+                    "बोलिए, क्या चाहिए?",
                 ],
                 "done": [
+                    "हो गया, easy.",
+                    "Done, कुछ और?",
                     "हो गया।",
-                    "ठीक है।",
-                    "सब हो गया।",
-                    "पूरा कर दिया।",
+                    "मैंने कर दिया।",
                 ],
                 "cancel": [
-                    "कोई बात नहीं, रद्द कर दिया।",
-                    "ठीक है, मैंने रोक दिया।",
-                    "रद्द कर दिया गया।",
+                    "ठीक है, रद्द कर दिया।",
+                    "कोई बात नहीं, मैंने stop कर दिया।",
+                    "Done, रद्द हो गया।",
                 ],
             }
             pool = replies.get(kind)
@@ -94,25 +95,25 @@ class CosmicEngine:
 
         replies = {
             "unknown": [
-                "I’m not sure I caught that. Try asking me something like the time, a search, or a website.",
-                "Sorry, I missed that. You can ask me to open apps, search the web, or look something up.",
-                "I didn’t get that one. Want to try again?",
+                "Oops, I didn’t catch that. Try asking in a simpler way.",
+                "Sorry, I missed that. Say it once more and I’ll handle it.",
+                "I didn’t get that. Want to try again?",
             ],
             "greeting": [
-                "Absolutely.",
-                "Sure thing.",
-                "On it.",
-                "You got it.",
+                "Hey, I’m here.",
+                "Yep, go ahead.",
+                "Sure, tell me.",
+                "I’m listening.",
             ],
             "done": [
                 "Done.",
                 "All set.",
                 "There you go.",
-                "Finished.",
+                "Nice, done.",
             ],
             "cancel": [
                 "No problem, cancelled.",
-                "All good, I stopped that.",
+                "Okay, I stopped it.",
                 "Cancelled.",
             ],
         }
@@ -154,7 +155,7 @@ class CosmicEngine:
             return CosmicResponse(message=self._msg("English mode turned on.", "अंग्रेज़ी मोड चालू हो गया है।"), language="en")
 
         if normalized in {"hello", "hi", "hey", "hiya", "good morning", "good afternoon", "good evening", "namaste", "namaskar", "pranam", "kaise ho", "kaise hain", "kya haal hai", "नमस्ते", "नमस्कार", "कैसे हो", "कैसे हैं", "क्या हाल है", "प्रणाम"}:
-            return CosmicResponse(message=self._greeting_reply())
+            return CosmicResponse(message=self._greeting_reply(), language=self.language)
 
         if normalized in {"exit", "quit", "stop", "goodbye", "bye", "alvida", "phir milenge", "बंद करो", "बंद", "विदा"}:
             return CosmicResponse(message=self._msg("Alright, I’ll be here when you need me.", "ठीक है, जब भी ज़रूरत हो मैं यहाँ हूँ।"), should_exit=True, language=self.language)
@@ -298,18 +299,18 @@ class CosmicEngine:
 
         if self.language == "hi":
             replies = [
-                f"{hindi_greeting}। आपको देखकर अच्छा लगा।",
-                f"{hindi_greeting}। मैं आपकी कैसे मदद कर सकता हूँ?",
-                f"नमस्ते। मैं सुन रहा हूँ।",
-                f"हाँ जी, बताइए।",
+                f"{hindi_greeting}। क्या चल रहा है?",
+                f"{hindi_greeting}। मैं सुन रहा हूँ।",
+                f"नमस्ते। बताइए क्या चाहिए?",
+                f"हाँ जी, बोलिए।",
             ]
             return random.choice(replies)
 
         replies = [
-            f"{time_greeting}. Nice to see you.",
-            f"{time_greeting}. How can I help?",
-            f"Hey there. What can I do for you?",
-            f"Hello. I’m listening.",
+            f"{time_greeting}. What’s up?",
+            f"{time_greeting}. I’m listening.",
+            f"Hey there. What can I help with?",
+            f"Hello. Go ahead.",
         ]
         return random.choice(replies)
 
@@ -507,8 +508,8 @@ class CosmicEngine:
             if isinstance(profile, dict):
                 name = str(profile.get("preferred name", "")).strip() or str(profile.get("name", "")).strip()
             if name:
-                return CosmicResponse(message=self._msg(f"I?m doing well, {name}. What can I do for you?", f"??? ??? ???, {name}? ???? ??? ???? ?? ???? ????"), language=self.language)
-            return CosmicResponse(message=self._msg("I?m doing well. What can I do for you?", "??? ??? ???? ???? ??? ???? ?? ???? ????"), language=self.language)
+                return CosmicResponse(message=self._msg(f"I’m good, {name}. What about you?", f"मैं ठीक हूँ, {name}। आप कैसे हैं?"), language=self.language)
+            return CosmicResponse(message=self._msg("I’m good. What about you?", "मैं ठीक हूँ। आप कैसे हैं?"), language=self.language)
 
         return CosmicResponse(
             message=self._msg(
@@ -787,6 +788,18 @@ class CosmicEngine:
             self.memory["conversation_mode"] = False
             self._save_memory(self.memory)
             return CosmicResponse(message=self._msg("Command mode is on.", "Command mode चालू है।"), language=self.language)
+
+        if normalized in {"casual mode", "friendly mode", "human mode", "relaxed mode"}:
+            self.casual_mode = True
+            self.memory["casual_mode"] = True
+            self._save_memory(self.memory)
+            return CosmicResponse(message=self._msg("Casual mode is on. I’ll sound more natural now.", "Casual mode चालू है। अब मैं ज़्यादा natural लगूँगा।"), language=self.language)
+
+        if normalized in {"formal mode", "robot mode", "strict replies", "professional mode"}:
+            self.casual_mode = False
+            self.memory["casual_mode"] = False
+            self._save_memory(self.memory)
+            return CosmicResponse(message=self._msg("Formal mode is on.", "Formal mode चालू है।"), language=self.language)
 
         remember_match = re.match(
             r"^(?:remember that|remember|save that|note that)\s+(?P<fact>.+)$",
