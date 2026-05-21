@@ -15,46 +15,6 @@
   "conversation_mode": true,
   "recent": [
     {
-      "user": "send message to maa",
-      "assistant": "I could not find maa. Add it to contacts.json or say the phone number, then I will send: send message to bro",
-      "time": "2026-05-21T21:19:39"
-    },
-    {
-      "user": "send message to maa",
-      "assistant": "I could not find maa. Add it to contacts.json or say the phone number, then I will send: send message to bro",
-      "time": "2026-05-21T21:19:50"
-    },
-    {
-      "user": "remember maa mobile no 9876543210",
-      "assistant": "Saved maa in contacts.",
-      "time": "2026-05-21T21:23:53"
-    },
-    {
-      "user": "send message to maa",
-      "assistant": "What message should I send to maa?",
-      "time": "2026-05-21T21:24:09"
-    },
-    {
-      "user": "send message to maa",
-      "assistant": "What message should I send to maa?",
-      "time": "2026-05-21T21:25:22"
-    },
-    {
-      "user": "hello",
-      "assistant": "I could not find maa. Add it to contacts.json or say the phone number, then I will send: hello",
-      "time": "2026-05-21T21:25:31"
-    },
-    {
-      "user": "how are you",
-      "assistant": "I’m doing pretty well, thanks for asking. How about you?",
-      "time": "2026-05-21T21:36:31"
-    },
-    {
-      "user": "thanks",
-      "assistant": "Anytime.",
-      "time": "2026-05-21T21:36:43"
-    },
-    {
       "user": "what can you do",
       "assistant": "Try saying: hello, who are you, what can you do, what do you remember; time, date, daily briefing; search Python tutorials, who is Nikola Tesla, wikipedia Python; open notepad, open whatsapp, open screenshots folder; play lo-fi music; type hello there, note buy milk, search note python, find note meeting, list notes, open note 1, delete note 1, press enter, hotkey ctrl c; scroll current page, scroll a little, scroll a lot, scroll faster, scroll slower, scroll up, scroll down, click, double click, move mouse up 100; call 9876543210, send message to mom hello, open whatsapp chat with mom; remember this is my maa mobile no 9876543210, remember that my name is Aniket, conversation mode, command mode; daily planner, plan my day; remind me in 10 minutes to drink water, list reminders, snooze reminder 1 for 10 minutes; clipboard manager, clear clipboard history, remove clipboard 1, copy clipboard 1, paste clipboard 1; file search, search file invoice, open file 1; search note python, find note meeting, list notes, open note 1, delete note 1, edit note 1 buy milk; add event tomorrow at 5 pm team meeting, calendar, list events, cancel event 1; timer 10 minutes, list timers, cancel timer 1, start stopwatch, stop stopwatch, reset stopwatch; clipboard, copy hello, read clipboard, clipboard history, paste clipboard 2; weather, set alarm for 7 am to wake up, screenshot, translate hello to hindi, translate and speak hello to hindi; open downloads, open documents, open pictures, open desktop; quick reply busy, quick reply call you later, reply on my way; study mode, work mode, focus mode, focus mode off, normal mode, set volume 50, brightness 70, lock the computer, shutdown, restart, sleep, log off.",
       "time": "2026-05-21T21:36:59"
@@ -73,6 +33,46 @@
       "user": "stop",
       "assistant": "Alright, I’ll be here when you need me.",
       "time": "2026-05-21T21:51:29"
+    },
+    {
+      "user": "write a short poem about rain",
+      "assistant": "Typing a short poem about rain.",
+      "time": "2026-05-21T21:55:05"
+    },
+    {
+      "user": "paste",
+      "assistant": "I’m in local mode right now, but I can still help with time, date, Wikipedia, web search, apps, notes, typing, keyboard shortcuts, calls, and system actions.",
+      "time": "2026-05-21T21:55:27"
+    },
+    {
+      "user": "what is artificial intelligence",
+      "assistant": "I’m in local mode right now, but I can still help with time, date, Wikipedia, web search, apps, notes, typing, keyboard shortcuts, calls, and system actions.",
+      "time": "2026-05-21T21:55:30"
+    },
+    {
+      "user": "What is artificial intaligence",
+      "assistant": "Hey there!\n\nArtificial intelligence (AI) is basically when computers are programmed to \"think\" and learn like humans. It's all about making machines smart enough to solve problems, understand language, recognize patterns, or even make decisions on their own.\n\nThink of it like giving a computer a brain! 😊",
+      "time": "2026-05-21T22:05:18"
+    },
+    {
+      "user": "write a short poem about rain",
+      "assistant": "Typing a short poem about rain.",
+      "time": "2026-05-21T22:06:00"
+    },
+    {
+      "user": "help me write a message to mom",
+      "assistant": "Try saying: hello, who are you, what can you do, what do you remember; time, date, daily briefing; search Python tutorials, who is Nikola Tesla, wikipedia Python; open notepad, open whatsapp, open screenshots folder; play lo-fi music; type hello there, note buy milk, search note python, find note meeting, list notes, open note 1, delete note 1, press enter, hotkey ctrl c; scroll current page, scroll a little, scroll a lot, scroll faster, scroll slower, scroll up, scroll down, click, double click, move mouse up 100; call 9876543210, send message to mom hello, open whatsapp chat with mom; remember this is my maa mobile no 9876543210, remember that my name is Aniket, conversation mode, command mode; daily planner, plan my day; remind me in 10 minutes to drink water, list reminders, snooze reminder 1 for 10 minutes; clipboard manager, clear clipboard history, remove clipboard 1, copy clipboard 1, paste clipboard 1; file search, search file invoice, open file 1; search note python, find note meeting, list notes, open note 1, delete note 1, edit note 1 buy milk; add event tomorrow at 5 pm team meeting, calendar, list events, cancel event 1; timer 10 minutes, list timers, cancel timer 1, start stopwatch, stop stopwatch, reset stopwatch; clipboard, copy hello, read clipboard, clipboard history, paste clipboard 2; weather, set alarm for 7 am to wake up, screenshot, translate hello to hindi, translate and speak hello to hindi; open downloads, open documents, open pictures, open desktop; quick reply busy, quick reply call you later, reply on my way; study mode, work mode, focus mode, focus mode off, normal mode, set volume 50, brightness 70, lock the computer, shutdown, restart, sleep, log off.",
+      "time": "2026-05-21T22:06:16"
+    },
+    {
+      "user": "give me a caption for instagram",
+      "assistant": "Hey there! Sure thing, how about one of these?\n\n*   Here for the good times! ✨\n*   Making memories.\n*   Just enjoying the moment.\n*   Good vibes only.\n\nHope one of those sparks something great for your post! 😊",
+      "time": "2026-05-21T22:06:39"
+    },
+    {
+      "user": "explain photosynthesis",
+      "assistant": "Hey there!\n\nPhotosynthesis is basically how plants make their own food! Think of it like a plant's kitchen.\n\nHere's the super simple version:\n\n1.  Plants take in **sunlight**, **water** (through their roots), and **carbon dioxide** (from the air).\n2.  They mix these ingredients together inside their leaves (that's where the magic happens!).\n3.  Out comes **sugar** (which is their food to grow) and **oxygen** (which they release into the air – and we breathe it!).\n\nSo, they're essentially sun-powered food factories that also give us the air we need! Pretty neat, right?",
+      "time": "2026-05-21T22:07:18"
     }
   ],
   "stopwatch": {

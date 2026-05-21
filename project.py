@@ -1212,6 +1212,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv if argv is not None else sys.argv[1:])
 
     assistant = VoiceAssistant(use_voice=not args.text)
+    print(assistant.command_engine.startup_status_message())
     if not assistant.use_voice:
         print("Voice mode is unavailable or disabled. Running in text mode.")
         print("Type commands like: time, open youtube, search python, note hello, or exit.")

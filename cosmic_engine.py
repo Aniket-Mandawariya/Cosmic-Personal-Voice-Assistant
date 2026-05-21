@@ -387,12 +387,52 @@ class CosmicEngine:
     def _msg(self, english: str, hindi: str) -> str:
         return hindi if self.language == "hi" else english
 
+    def startup_status_message(self) -> str:
+        if self.gemini_client is not None:
+            return self._msg(
+                "Gemini is connected. Local commands are ready too.",
+                "Gemini connect ho gaya hai. Local commands bhi ready hain.",
+            )
+        return self._msg(
+            "Local mode only. Set GEMINI_API_KEY to enable AI chat.",
+            "Sirf local mode on hai. AI chat ke liye GEMINI_API_KEY set karein.",
+        )
+
+    @staticmethod
+    def _read_windows_user_env(name: str) -> str:
+        if os.name != "nt":
+            return ""
+        try:
+            import winreg  # type: ignore
+
+            with winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Environment") as key:
+                value, _ = winreg.QueryValueEx(key, name)
+                return str(value).strip()
+        except Exception:
+            return ""
+
+    def _get_gemini_api_key(self) -> str:
+        for name in ("GEMINI_API_KEY", "GOOGLE_API_KEY"):
+            value = os.environ.get(name, "").strip()
+            if value:
+                return value
+
+        for name in ("GEMINI_API_KEY", "GOOGLE_API_KEY"):
+            value = self._read_windows_user_env(name)
+            if value:
+                return value
+
+        return ""
+
     def _build_gemini_client(self):
         if genai is None:
             return None
 
         try:
-            return genai.Client()
+            api_key = self._get_gemini_api_key()
+            if not api_key:
+                return None
+            return genai.Client(api_key=api_key)
         except Exception:
             logger.exception("Failed to initialize Gemini client")
             return None

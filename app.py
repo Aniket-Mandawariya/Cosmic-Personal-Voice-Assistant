@@ -555,7 +555,11 @@ def run_macro(macro: str) -> None:
 
 @app.get("/")
 def home():
-    return render_template("index.html", assistant_name=ASSISTANT_NAME)
+    return render_template(
+        "index.html",
+        assistant_name=ASSISTANT_NAME,
+        startup_status=engine.startup_status_message(),
+    )
 
 
 @app.post("/api/command")
