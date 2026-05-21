@@ -180,13 +180,13 @@ class CosmicEngine:
         if input_response is not None:
             return input_response
 
-        memory_response = self._handle_memory_command(command, normalized)
-        if memory_response is not None:
-            return memory_response
-
         remember_response = self._handle_remember_command(command, normalized)
         if remember_response is not None:
             return remember_response
+
+        memory_response = self._handle_memory_command(command, normalized)
+        if memory_response is not None:
+            return memory_response
 
         reminder_response = self._handle_reminder_command(command, normalized)
         if reminder_response is not None:
@@ -347,6 +347,13 @@ class CosmicEngine:
         return CosmicResponse(message=self._msg("Just say yes or no.", "बस हाँ या नहीं बोलिए।"), language=self.language)
 
     def _handle_pending_flow(self, raw_command: str, normalized: str) -> CosmicResponse | None:
+        if self._looks_like_new_command(normalized):
+            self.pending_action = ""
+            self.pending_contact_name = ""
+            self.pending_contact_number = ""
+            self.pending_message_text = ""
+            return None
+
         if self.pending_action == "whatsapp_chat":
             response = self._resolve_whatsapp_chat(raw_command.strip())
             if response.action:
@@ -443,6 +450,38 @@ class CosmicEngine:
             return CosmicResponse(message=f"Tell me the phone number for {name}.")
 
         return None
+
+    @staticmethod
+    def _looks_like_new_command(normalized: str) -> bool:
+        return any(
+            normalized.startswith(prefix)
+            for prefix in (
+                "send message to ",
+                "open whatsapp chat with ",
+                "open whatsapp ",
+                "call ",
+                "dial ",
+                "remember ",
+                "याद रखो ",
+                "याद करो ",
+                "सेव करो ",
+                "save ",
+                "store ",
+                "add ",
+                "open ",
+                "खोलो ",
+                "खोलें ",
+                "ओपन ",
+                "चलाओ ",
+                "चालू ",
+                "translate ",
+                "search ",
+                "wiki ",
+                "wikipedia ",
+                "note ",
+                "write note ",
+            )
+        )
 
     def _handle_wikipedia(self, normalized: str) -> CosmicResponse | None:
         prefixes = ("wikipedia ", "wiki ")
@@ -740,12 +779,12 @@ class CosmicEngine:
         return None
 
     def _handle_remember_command(self, raw_command: str, normalized: str) -> CosmicResponse | None:
-        if not self._starts_with_any(normalized, ("remember ", "याद रखो ", "याद करो ", "सेव करो ", "save ")):
+        if not self._starts_with_any(normalized, ("remember ", "याद रखो ", "याद करो ", "सेव करो ", "save ", "store ", "add ")):
             return None
 
         raw_text = re.sub(r"[^\w\s+]", "", raw_command.strip())
         match = re.match(
-            r"^(?:remember|याद रखो|याद करो|सेव करो|save)(?: this is)?(?: my)? (?P<name>.+?) mobile (?:no|number|नंबर|नं)(?: is)?(?: (?P<number>.+))?$",
+            r"^(?:remember|याद रखो|याद करो|सेव करो|save|store|add)(?: this is)?(?: my)? (?P<name>.+?) (?:mobile|phone|contact) (?:no|number|नंबर|नं|num|#)(?: is)?(?: (?P<number>.+))?$",
             raw_text,
             flags=re.IGNORECASE,
         )
@@ -754,7 +793,7 @@ class CosmicEngine:
                 message=self._msg("Tell me it like: remember this is my maa mobile no 9876543210.", "ऐसे बोलें: remember this is my maa mobile no 9876543210.")
             )
 
-        name = match.group("name").strip()
+        name = self._normalize_contact_name(match.group("name").strip())
         number_text = (match.group("number") or "").strip()
         number = re.sub(r"\D", "", number_text)
 
@@ -2133,6 +2172,21 @@ class CosmicEngine:
             return self._normalize_phone_number(self.contacts[matches[0]])
 
         return ""
+
+    @staticmethod
+    def _normalize_contact_name(name: str) -> str:
+        cleaned = re.sub(r"\s+", " ", name.lower().strip())
+        cleaned = re.sub(r"^(?:my|this is my|this is|the)\s+", "", cleaned)
+        cleaned = cleaned.replace("contact number", "")
+        cleaned = cleaned.replace("phone number", "")
+        cleaned = cleaned.replace("mobile number", "")
+        cleaned = cleaned.replace("mobile no", "")
+        cleaned = cleaned.replace("mobile", "")
+        cleaned = cleaned.replace("number", "")
+        cleaned = cleaned.replace("phone", "")
+        cleaned = cleaned.replace("contact", "")
+        cleaned = re.sub(r"\s+", " ", cleaned).strip()
+        return cleaned
 
     def _set_contact(self, name: str, number: str) -> None:
         cleaned_name = name.lower().strip()
