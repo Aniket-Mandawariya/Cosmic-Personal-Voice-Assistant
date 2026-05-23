@@ -15,11 +15,6 @@
   "conversation_mode": true,
   "recent": [
     {
-      "user": "What is your name",
-      "assistant": "I’m Cosmic, your personal assistant.",
-      "time": "2026-05-21T21:37:12"
-    },
-    {
       "user": "what is artificial intelligence",
       "assistant": "I’m in local mode right now, but I can still help with time, date, Wikipedia, web search, apps, notes, typing, keyboard shortcuts, calls, and system actions.",
       "time": "2026-05-21T21:51:23"
@@ -73,6 +68,11 @@
       "user": "Hello",
       "assistant": "Good morning. I’m listening.",
       "time": "2026-05-24T01:59:48"
+    },
+    {
+      "user": "what is Narrow ai",
+      "assistant": "Hey there!\n\nNarrow AI, sometimes called \"Weak AI,\" is when an AI is designed and trained to do one very specific task really well. Think of it like a specialist! It's fantastic at its particular job, but can't do things outside that scope.\n\nExamples include the AI behind voice assistants (like Siri or Alexa), image recognition software, or even AI that plays chess.",
+      "time": "2026-05-24T02:09:39"
     }
   ],
   "stopwatch": {
