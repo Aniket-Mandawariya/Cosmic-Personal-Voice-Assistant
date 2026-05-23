@@ -9,3 +9,4 @@ pyautogui
 pywin32
 pycaw
 screen_brightness_control
+google-genai
