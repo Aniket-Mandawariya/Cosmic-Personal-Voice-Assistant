@@ -10,25 +10,10 @@
     "this is my maa mobile number 9876543210"
   ],
   "profile": {
-    "name": "aniket mandariya"
+    "name": "aniket mandawariya"
   },
   "conversation_mode": true,
   "recent": [
-    {
-      "user": "lock pc",
-      "assistant": "Locking the system now.",
-      "time": "2026-05-23T17:08:42"
-    },
-    {
-      "user": "who is your creator",
-      "assistant": "I was built by Aniket Mandawariya as Cosmic, a personal assistant.",
-      "time": "2026-05-23T17:09:07"
-    },
-    {
-      "user": "what is black hole",
-      "assistant": "Hey there!\n\nSo, a black hole is basically a super dense spot in space where gravity is so incredibly strong that absolutely nothing—not even light itself—can get away once it crosses a certain point. It's often what's left behind after a really massive star collapses. Pretty wild stuff! ✨",
-      "time": "2026-05-23T17:09:35"
-    },
     {
       "user": "Volume 50",
       "assistant": "Setting volume to 50 percent.",
@@ -73,6 +58,21 @@
       "user": "increase volume",
       "assistant": "Turning the volume up.",
       "time": "2026-05-23T17:13:21"
+    },
+    {
+      "user": "which team won IPL in 2024",
+      "assistant": "I’m in local mode right now, but I can still help with time, date, Wikipedia, web search, apps, notes, typing, keyboard shortcuts, calls, and system actions.",
+      "time": "2026-05-24T01:01:53"
+    },
+    {
+      "user": "hello",
+      "assistant": "Hey there. What can I help with?",
+      "time": "2026-05-24T01:16:33"
+    },
+    {
+      "user": "lock pc",
+      "assistant": "Locking the system now.",
+      "time": "2026-05-24T01:16:40"
     }
   ],
   "stopwatch": {

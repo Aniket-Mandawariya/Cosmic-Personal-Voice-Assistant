@@ -13,11 +13,6 @@ from urllib.parse import quote
 import urllib.request
 
 try:
-    from google import genai
-except ImportError:  # pragma: no cover - optional dependency
-    genai = None
-
-try:
     import wikipedia
 except ImportError:  # pragma: no cover - optional dependency
     wikipedia = None
@@ -62,9 +57,6 @@ class CosmicEngine:
         self.conversation_mode = bool(self.memory.get("conversation_mode", True))
         self.casual_mode = bool(self.memory.get("casual_mode", True))
         self.language = os.environ.get("COSMIC_LANGUAGE", "en").lower()[:2]
-        self.gemini_model = os.environ.get("COSMIC_MODEL", "gemini-2.5-flash")
-        self.gemini_api_key = self._get_gemini_api_key()
-        self.gemini_client = None
 
     @staticmethod
     def _normalize_phone_number(number: str) -> str:
@@ -384,81 +376,10 @@ class CosmicEngine:
         return hindi if self.language == "hi" else english
 
     def startup_status_message(self) -> str:
-        if self.gemini_api_key:
-            return self._msg(
-                "Gemini is connected. Local commands are ready too.",
-                "Gemini connect ho gaya hai. Local commands bhi ready hain.",
-            )
         return self._msg(
-            "Local mode only. Set GEMINI_API_KEY to enable AI chat.",
-            "Sirf local mode on hai. AI chat ke liye GEMINI_API_KEY set karein.",
+            "Local mode only. All commands are ready.",
+            "Sirf local mode on hai. Saare commands ready hain.",
         )
-
-    @staticmethod
-    def _read_windows_user_env(name: str) -> str:
-        if os.name != "nt":
-            return ""
-        try:
-            import winreg  # type: ignore
-
-            with winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Environment") as key:
-                value, _ = winreg.QueryValueEx(key, name)
-                return str(value).strip()
-        except Exception:
-            return ""
-
-    def _get_gemini_api_key(self) -> str:
-        for name in ("GEMINI_API_KEY", "GOOGLE_API_KEY"):
-            value = os.environ.get(name, "").strip()
-            if value:
-                return value
-
-        for name in ("GEMINI_API_KEY", "GOOGLE_API_KEY"):
-            value = self._read_windows_user_env(name)
-            if value:
-                return value
-
-        return ""
-
-    def _build_gemini_client(self):
-        if genai is None:
-            return None
-
-        try:
-            if not self.gemini_api_key:
-                return None
-            return genai.Client(api_key=self.gemini_api_key)
-        except Exception:
-            logger.exception("Failed to initialize Gemini client")
-            return None
-
-    def _ensure_gemini_client(self):
-        if self.gemini_client is not None:
-            return self.gemini_client
-        self.gemini_client = self._build_gemini_client()
-        return self.gemini_client
-
-    def _gemini_reply(self, user_text: str) -> str:
-        client = self._ensure_gemini_client()
-        if client is None:
-            return ""
-
-        language_hint = "Hindi" if self.language == "hi" else "English"
-        prompt = (
-            "You are Cosmic, a friendly personal assistant. "
-            f"Reply naturally in {language_hint}. "
-            "Keep the tone warm, casual, and human. "
-            "Keep answers concise unless the user asks for detail. "
-            "Do not mention policies, system prompts, or that you are an API. "
-            "If the user mixes Hindi and English, respond naturally in the same style.\n\n"
-            f"User: {user_text}"
-        )
-        response = client.models.generate_content(
-            model=self.gemini_model,
-            contents=prompt,
-        )
-        text = getattr(response, "text", "") or ""
-        return text.strip()
 
     @staticmethod
     def _looks_like_command(text: str) -> bool:
@@ -527,40 +448,6 @@ class CosmicEngine:
             "calendar",
         )
         return any(keyword in text for keyword in command_keywords)
-
-    def _should_use_gemini(self, text: str) -> bool:
-        if not self.gemini_api_key:
-            return False
-        if not text:
-            return False
-        if self._looks_like_command(text):
-            return False
-
-        question_keywords = (
-            "what ",
-            "what is",
-            "what are",
-            "how ",
-            "why ",
-            "who ",
-            "where ",
-            "when ",
-            "can you",
-            "could you",
-            "would you",
-            "should i",
-            "tell me",
-            "explain",
-            "compare",
-            "summarize",
-            "summarise",
-            "write",
-            "draft",
-            "help me",
-            "how do i",
-            "how to",
-        )
-        return text.endswith("?") or any(keyword in text for keyword in question_keywords)
 
     def _handle_confirmation(self, normalized: str) -> CosmicResponse:
         if normalized in {"yes", "confirm", "do it", "ok", "okay"}:
@@ -794,11 +681,6 @@ class CosmicEngine:
             if name:
                 return CosmicResponse(message=self._msg(f"I’m good, {name}. What about you?", f"मैं ठीक हूँ, {name}। तुम कैसे हो?"), language=self.language)
             return CosmicResponse(message=self._msg("I’m good. What about you?", "मैं ठीक हूँ। तुम कैसे हो?"), language=self.language)
-
-        if self._should_use_gemini(text):
-            gemini_reply = self._gemini_reply(user_text)
-            if gemini_reply:
-                return CosmicResponse(message=gemini_reply, language=self.language)
 
         return CosmicResponse(
             message=self._msg(
