@@ -63,7 +63,8 @@ class CosmicEngine:
         self.casual_mode = bool(self.memory.get("casual_mode", True))
         self.language = os.environ.get("COSMIC_LANGUAGE", "en").lower()[:2]
         self.gemini_model = os.environ.get("COSMIC_MODEL", "gemini-2.5-flash")
-        self.gemini_client = self._build_gemini_client()
+        self.gemini_api_key = self._get_gemini_api_key()
+        self.gemini_client = None
 
     @staticmethod
     def _normalize_phone_number(number: str) -> str:
@@ -348,11 +349,6 @@ class CosmicEngine:
         if self._contains_any(normalized, {"who are you", "your name", "tum kaun ho", "tumhara naam", "तुम कौन हो", "तुम्हारा नाम", "आप कौन हैं", "आपका नाम"}):
             return CosmicResponse(message=self._msg(f"I’m {self.assistant_name}, your personal assistant.", f"मैं {self.assistant_name} हूँ, आपका personal assistant।"), language=self.language)
 
-        if self.gemini_client is not None:
-            gemini_response = self._gemini_reply(command)
-            if gemini_response:
-                return CosmicResponse(message=gemini_response, language=self.language)
-
         return self.chat_response(command)
 
     def _greeting_reply(self) -> str:
@@ -388,7 +384,7 @@ class CosmicEngine:
         return hindi if self.language == "hi" else english
 
     def startup_status_message(self) -> str:
-        if self.gemini_client is not None:
+        if self.gemini_api_key:
             return self._msg(
                 "Gemini is connected. Local commands are ready too.",
                 "Gemini connect ho gaya hai. Local commands bhi ready hain.",
@@ -429,16 +425,22 @@ class CosmicEngine:
             return None
 
         try:
-            api_key = self._get_gemini_api_key()
-            if not api_key:
+            if not self.gemini_api_key:
                 return None
-            return genai.Client(api_key=api_key)
+            return genai.Client(api_key=self.gemini_api_key)
         except Exception:
             logger.exception("Failed to initialize Gemini client")
             return None
 
+    def _ensure_gemini_client(self):
+        if self.gemini_client is not None:
+            return self.gemini_client
+        self.gemini_client = self._build_gemini_client()
+        return self.gemini_client
+
     def _gemini_reply(self, user_text: str) -> str:
-        if self.gemini_client is None:
+        client = self._ensure_gemini_client()
+        if client is None:
             return ""
 
         language_hint = "Hindi" if self.language == "hi" else "English"
@@ -451,12 +453,114 @@ class CosmicEngine:
             "If the user mixes Hindi and English, respond naturally in the same style.\n\n"
             f"User: {user_text}"
         )
-        response = self.gemini_client.models.generate_content(
+        response = client.models.generate_content(
             model=self.gemini_model,
             contents=prompt,
         )
         text = getattr(response, "text", "") or ""
         return text.strip()
+
+    @staticmethod
+    def _looks_like_command(text: str) -> bool:
+        command_starts = (
+            "open ",
+            "search ",
+            "play ",
+            "note ",
+            "write note ",
+            "set ",
+            "volume ",
+            "brightness ",
+            "lock",
+            "shutdown",
+            "restart",
+            "sleep",
+            "log off",
+            "logoff",
+            "mute",
+            "unmute",
+            "scroll ",
+            "call ",
+            "dial ",
+            "send message",
+            "open whatsapp",
+            "remember ",
+            "save ",
+            "store ",
+            "add ",
+            "clipboard",
+            "copy ",
+            "paste ",
+            "timer ",
+            "alarm ",
+            "remind ",
+            "calendar ",
+            "weather ",
+            "translate ",
+            "daily briefing",
+            "plan my day",
+            "focus mode",
+            "study mode",
+            "work mode",
+            "bedtime mode",
+            "relax mode",
+        )
+        if any(text.startswith(prefix) for prefix in command_starts):
+            return True
+        command_keywords = (
+            "youtube",
+            "whatsapp",
+            "notepad",
+            "calculator",
+            "screenshot",
+            "brightness",
+            "volume",
+            "shutdown",
+            "restart",
+            "sleep",
+            "lock",
+            "mute",
+            "clipboard",
+            "timer",
+            "alarm",
+            "reminder",
+            "calendar",
+        )
+        return any(keyword in text for keyword in command_keywords)
+
+    def _should_use_gemini(self, text: str) -> bool:
+        if not self.gemini_api_key:
+            return False
+        if not text:
+            return False
+        if self._looks_like_command(text):
+            return False
+
+        question_keywords = (
+            "what ",
+            "what is",
+            "what are",
+            "how ",
+            "why ",
+            "who ",
+            "where ",
+            "when ",
+            "can you",
+            "could you",
+            "would you",
+            "should i",
+            "tell me",
+            "explain",
+            "compare",
+            "summarize",
+            "summarise",
+            "write",
+            "draft",
+            "help me",
+            "how do i",
+            "how to",
+        )
+        return text.endswith("?") or any(keyword in text for keyword in question_keywords)
 
     def _handle_confirmation(self, normalized: str) -> CosmicResponse:
         if normalized in {"yes", "confirm", "do it", "ok", "okay"}:
@@ -677,7 +781,7 @@ class CosmicEngine:
         if "thank you" in text or "thanks" in text:
             return CosmicResponse(message=self._msg("Anytime.", "हमेशा।"), language=self.language)
 
-        if "who made you" in text or "who create you" in text:
+        if any(phrase in text for phrase in {"who made you", "who create you", "who created you", "who is your creator", "creator", "created you"}):
             return CosmicResponse(message=self._msg("I was built by Aniket Mandawariya as Cosmic, a personal assistant.", "मुझे Aniket Mandawariya ने Cosmic personal assistant के रूप में बनाया है।"), language=self.language)
 
         if "what is your name" in text or "your name" in text:
@@ -690,6 +794,11 @@ class CosmicEngine:
             if name:
                 return CosmicResponse(message=self._msg(f"I’m good, {name}. What about you?", f"मैं ठीक हूँ, {name}। तुम कैसे हो?"), language=self.language)
             return CosmicResponse(message=self._msg("I’m good. What about you?", "मैं ठीक हूँ। तुम कैसे हो?"), language=self.language)
+
+        if self._should_use_gemini(text):
+            gemini_reply = self._gemini_reply(user_text)
+            if gemini_reply:
+                return CosmicResponse(message=gemini_reply, language=self.language)
 
         return CosmicResponse(
             message=self._msg(
@@ -737,13 +846,13 @@ class CosmicEngine:
         if normalized in {"task manager", "open task manager"}:
             return CosmicResponse(message="Sure, opening Task Manager.", action="open_app", data={"app_name": "taskmgr.exe"})
 
-        if normalized in {"volume up", "louder"}:
+        if normalized in {"volume up", "louder", "increase volume", "turn volume up", "turn the volume up", "make it louder"}:
             return CosmicResponse(message="Turning the volume up.", action="adjust_volume", data={"direction": "up"})
 
-        if normalized in {"volume down", "lower volume"}:
+        if normalized in {"volume down", "lower volume", "decrease volume", "turn volume down", "turn the volume down", "make it quieter"}:
             return CosmicResponse(message="Turning the volume down.", action="adjust_volume", data={"direction": "down"})
 
-        if normalized in {"mute", "unmute"}:
+        if normalized in {"mute", "unmute", "silence"}:
             return CosmicResponse(message="Toggling mute.", action="adjust_volume", data={"direction": "mute"})
 
         volume_set = self._extract_level_command(

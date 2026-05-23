@@ -611,15 +611,15 @@ class VoiceAssistant:
             self.open_app("taskmgr")
             return AssistantResponse("Opening Task Manager.")
 
-        if normalized in {"volume up", "louder"}:
+        if normalized in {"volume up", "louder", "increase volume", "turn volume up", "turn the volume up", "make it louder"}:
             self.adjust_volume("up")
             return AssistantResponse("Volume up.")
 
-        if normalized in {"volume down", "lower volume"}:
+        if normalized in {"volume down", "lower volume", "decrease volume", "turn volume down", "turn the volume down", "make it quieter"}:
             self.adjust_volume("down")
             return AssistantResponse("Volume down.")
 
-        if normalized in {"mute", "unmute"}:
+        if normalized in {"mute", "unmute", "silence"}:
             self.adjust_volume("mute")
             return AssistantResponse("Toggling mute.")
 
